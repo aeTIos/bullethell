@@ -12,7 +12,7 @@ class Player:
 
 
 class GameObjectData:
-    def __init__(self, pos, direction, rot, scale, sprite, ent_type, code):
+    def __init__(self, pos, direction, code, rot=None, scale=None, sprite=None, ent_type=None):
         self.pos = pos
         self.direction = direction
         self.rot = rot
@@ -27,5 +27,5 @@ class GameObject:
     def __init__(self, data):
         self.data = data
 
-    def update(self, player, dt):
-        self.data.code(self, player, dt)
+    def update(self, world, dt):
+        self.data.code(self, world, dt)
