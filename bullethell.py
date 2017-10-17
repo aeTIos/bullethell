@@ -1,33 +1,34 @@
 import sys
 import pygame
-from classes import *
 
+import objectcode
+import world
+import classes
+import assets
 
-ship = pygame.image.load("thing.png")
-
+# initialise pygame things
 pygame.init()
-size1 = width, height = 640, 480
-
+size1 = 640, 480
 screen = pygame.display.set_mode(size1)
-
-
-world = Game()
-player = Player(1, 5, 3, ship)
 clock = pygame.time.Clock()
+
+# test code
+player = classes.Player(speed=1, lives=5, bombs=3, sprite=assets.ship)
+world.spawn(classes.GameObjectData(pos=(40, 40), direction=(0, 0), rot=None, scale=None, sprite=None, ent_type=None,
+            code=objectcode.fourbulletspread))
+
 while True:
-    screen.fill((0, 0, 0))
+    clock.tick()
+    dt = clock.get_time() / 1000  # get time since last frame in seconds
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             sys.exit()
-            # add key handling
 
-    world.update()  # where the magic happens owo
-    # print('\n')
-    clock.tick()
-    print(clock.get_fps())
+    world.update(player, dt)
+
+    screen.fill((0, 0, 0))
     player.paint(screen)
-    world.paint(screen, pygame)
-
+    world.paint(screen)
     pygame.display.update()
 
